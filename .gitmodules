@@ -1,5 +1,5 @@
 [submodule "source"]
-	path = source
+	path = source/_posts
 	url = https://github.com/PD438/IS373hexo.git
 [submodule "playwright"]
 	path = playwright
