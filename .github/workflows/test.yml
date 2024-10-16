@@ -1,7 +1,7 @@
 name: Test
 
 on:
-  pull_request:
+  push:
     branches:
       - main  # Default branch
 
@@ -9,24 +9,36 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      # Checkout your main repository
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          submodules: recursive  # Ensure submodules are checked out
+          submodules: recursive  # Ensure submodules are checked out if any
+
+      # Install Website Dependencies
       - name: Install Website Dependencies
         run: npm install
-      - name: Install Playwright Dependencies
+
+      # Clone the Playwright repository
+      - name: Clone Playwright Repository
+        run: |
+          git clone https://github.com/PD438/is373_devops_playwright.git playwright
+          cd playwright
+          npm install  # Install dependencies for Playwright
+
+      # Download Browsers
+      - name: Download Playwright Browsers
         run: |
           cd playwright
-          npm install  # Install dependencies in the submodule
-      - name: Download Browsers
-        run: |
-          cd playwright
-          npx playwright install --with-deps # Download the required browsers
+          npx playwright install --with-deps  # Download the required browsers
+
+      # Start Hexo Server
       - name: Start Hexo Server
         run: |
           npm run server &  # Start the Hexo server in the background
           sleep 10  # Wait for the server to start
+
+      # Run Playwright Tests
       - name: Run Playwright Tests
         run: |
           cd playwright
