@@ -1,7 +1,7 @@
 plugins:
   - ./scripts/md-link-to-html/
 
-url: https://is373-mob.github.io/website
-root: /website/
+url: https://pd438.github.io/IS373hexo/
+root: /IS373hexo/
 
 theme: landscape
